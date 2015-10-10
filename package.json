@@ -1,5 +1,5 @@
 {
-  "name": "weather-cli",
+  "name": "weather-terminal",
   "version": "1.0.0",
   "description": "Weather from the command line",
   "engines": {
@@ -11,10 +11,11 @@
   "bin": {
     "weather": "cli.js"
   },
-  "repository": "mguida22/weather-cli",
+  "repository": "mguida22/weather-terminal",
   "author": "Michael Guida",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^1.2.0",
     "meow": "^3.4.2",
     "request": "^2.64.0"
   }
