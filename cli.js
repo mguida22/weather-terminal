@@ -12,20 +12,19 @@ let cli = meow(`
 	Example
 	  $ weather Boulder,CO
 
-      Boulder:
-        scattered clouds
-        296.69° K
-        25 % humidity
+  Boulder:
+    scattered clouds
+    69.55 ° F
+    15 % humidity
 `);
 
 if (cli.input[0] === undefined) {
-  console.log(`
-    Usage:
-      $ weather <city name>
-
-    Help:
-      $ weather --help
-  `);
+  console.log(
+    `Usage:\n`,
+    `  weather <city name>\n\n`,
+    `Help:\n`,
+    `  weather --help`
+  );
   process.exit(1);
 }
 
@@ -44,12 +43,12 @@ request(options, function (error, response, body) {
     let temp = (body.main.temp * (9/5) - 459.67).toFixed(2);
     let humidity = body.main.humidity;
 
-    console.log( `
-  ${body.name}:
-    ${description}
-    ${temp} ° F
-    ${humidity} % humidity
-    `);
+    console.log(
+      `${body.name}:\n`,
+      `  ${description}\n`,
+      `  ${temp} ° F\n`,
+      `  ${humidity} % humidity`
+    );
   } else if (response.statusCode == 401){
     console.log('Error: No API key provided.');
   } else {
