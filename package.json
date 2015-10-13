@@ -1,6 +1,6 @@
 {
   "name": "weather-terminal",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Weather from the command line",
   "engines": {
     "node": ">=4"
@@ -15,11 +15,9 @@
   "author": "Michael Guida",
   "license": "MIT",
   "dependencies": {
+    "degrees-to-direction": "^1.1.0",
     "dotenv": "^1.2.0",
     "meow": "^3.4.2",
     "request": "^2.64.0"
-  },
-  "devDependencies": {
-    "degrees-to-direction": "^1.1.0"
   }
 }
