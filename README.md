@@ -16,3 +16,6 @@ Boulder:
   74.37 ° F
   25 % humidity
 ```
+
+### License
+MIT
