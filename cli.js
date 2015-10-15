@@ -1,18 +1,33 @@
 #!/usr/bin/env node
 'use strict';
 
-require('dotenv').load();
+require('dotenv').load({ silent: true });
 const meow = require('meow');
-const request = require('request');
-const d2d = require('degrees-to-direction');
+const weather = require('./weather');
+const fs = require('fs');
+
+function showHelp() {
+  console.log(
+    `Usage:\n`,
+    `  weather <city name>\n\n`,
+    `Help:\n`,
+    `  weather --help`
+  );
+  process.exit(1);
+}
 
 let cli = meow(`
   Usage
-    $ weather <city name>
+    To add an API key:
+    $ weather <api key> --add-key
+
+    To get the weather:
+    $ weather <city name> <options>
 
   Options
     --version  Current version
     --help     Show this message
+    --add-key  Add an API key
     -a, --all  Show all data
 
 	Example
@@ -29,49 +44,20 @@ let cli = meow(`
 });
 
 if (cli.input[0] === undefined) {
-  console.log(
-    `Usage:\n`,
-    `  weather <city name>\n\n`,
-    `Help:\n`,
-    `  weather --help`
-  );
-  process.exit(1);
+  showHelp();
 }
 
-let options = {
-  url: 'http://api.openweathermap.org/data/2.5/weather?q=' + cli.input[0] + '&units=imperial',
-  headers: {
-    'x-api-key': process.env.API_KEY
-  }
-};
+if (cli.flags.addKey === true) {
+  fs.writeFile('./.env', `API_KEY=${cli.input[0]}`, function() {
+    console.log('Saved key.');
+    process.exit(0);
+  });
+}
 
-request(options, function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    body = JSON.parse(body);
-
-    let description = body.weather[0].description;
-    let temp = body.main.temp;
-    let humidity = body.main.humidity;
-
-    console.log(
-      `${body.name}:\n`,
-      `  ${description}\n`,
-      `  ${temp} ° F\n`,
-      `  ${humidity} % humidity`
-    );
-
-    if (cli.flags.all === true) {
-      //console.log(JSON.stringify(body));
-      console.log(
-        `\n`,
-        `  min. temp: ${body.main.temp_min}\n`,
-        `  max. temp: ${body.main.temp_max}\n`,
-        `  wind speed: ${body.wind.speed} mph from ${d2d(body.wind.deg)}`
-      );
-    }
-  } else if (response.statusCode == 401){
-    console.log('Error: No API key provided.');
-  } else {
-    console.log('Failed with status code of ' + response.statusCode);
-  }
-});
+if (cli.flags.all === true) {
+  weather.all(cli.input[0]);
+} else if (cli.flags.length === undefined) {
+  weather.current(cli.input[0]);
+} else {
+  showHelp();
+}

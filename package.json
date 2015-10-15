@@ -1,6 +1,6 @@
 {
   "name": "weather-terminal",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Weather from the command line",
   "engines": {
     "node": ">=4"
