@@ -5,7 +5,11 @@ Weather from the command line. :sunny:
 
 ### Setup
 ```sh
+# Install
 $ npm install --global weather-terminal
+
+# Update
+$ npm update --global weather-terminal
 ```
 
 You will need an API key from Open Weather. Follow the [directions](http://openweathermap.org/appid) to get a key.
