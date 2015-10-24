@@ -51,21 +51,21 @@ if (cli.input[0] === undefined) {
   } else {
     showHelp();
   }
-} else if (cli.flags.addKey === true) {
+} else if (cli.flags.addKey === true && cli.input.length === 1) {
   fs.writeFile('./.env', `API_KEY=${cli.input[0]}`, function() {
     console.log('Saved key.');
     process.exit(0);
   });
-} else if (cli.flags.setDefault === true) {
+} else if (cli.flags.setDefault === true && cli.input.length === 1) {
   let def = { default: cli.input[0] };
   def = JSON.stringify(def);
   fs.writeFile('./config.json', def, function() {
     console.log(`Set default location to ${cli.input[0]}`);
     process.exit(0);
   });
-} else if (cli.flags.all === true) {
+} else if (cli.flags.all === true && cli.input.length === 1) {
   weather.all(cli.input[0]);
-} else if (cli.flags.length === undefined) {
+} else if (cli.flags.length === undefined && cli.input.length === 1) {
   weather.current(cli.input[0]);
 } else {
   showHelp();
