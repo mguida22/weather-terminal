@@ -20,9 +20,22 @@ Once you have a key use `--add-key` flag to add the key to `weather-terminal`. T
 $ weather 123456789 --add-key
 ```
 
+You can optionally add a default location to use that will be saved for future requests.
+
+```sh
+$ weather Boulder,CO --set-default
+$ weather
+
+Boulder:
+  scattered clouds
+  74.37 ° F
+  25 % humidity
+```
+
 ### Usage
 ```sh
 $ weather Boulder,CO
+
 Boulder:
   scattered clouds
   74.37 ° F
