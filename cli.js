@@ -45,7 +45,17 @@ let cli = meow(`
 });
 
 if (cli.input[0] === undefined) {
-  let config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+  let config;
+  try {
+    config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('No config file.');
+    } else {
+      console.log(err);
+    }
+  }
+
   if (config && config.default && Object.keys(cli.flags).length === 0) {
     weather.current(config.default);
   } else {
